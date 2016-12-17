@@ -9,14 +9,21 @@ and open the template in the editor.
         <title>Dvidder - Home</title>
         <meta charset="UTF-8"></meta>
         <meta name="viewport" content="width=device-width, initial-scale=1.0"></meta>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+        <script type="text/javascript" src="js/main.js"></script>
     </head>
     <body>
         <p>Share dveeds with your friends :)</p> <br />
-        <p>Hi, <p th:text="${username}">username</p></p>
+        <p>Hi, <p th:text="${username}">username</p> </p>
         <form th:action="@{/post}" method="post">
             <textarea name="content"></textarea>
             <br />
             <button type="submit">Dveed!</button>
         </form>
-    </body>
+        <br />
+        
+        <label for="username-searchkey">Find dveeds by user: </label> <br />
+        <input type="text" id="username-searchkey" placeholder="username" />
+        <button onclick="search()">Search</button>
+</body>
 </html>
