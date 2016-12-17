@@ -6,12 +6,12 @@ and open the template in the editor.
 -->
 <html>
     <head>
-        <title>Dvidder - Login</title>
+        <title>Dvidder - Register</title>
         <meta charset="UTF-8"></meta>
         <meta name="viewport" content="width=device-width, initial-scale=1.0"></meta>
     </head>
     <body>
-        <p>Login</p>
+        <p>Register</p>
         <form th:action="@{/login}" method="post">
             <label for="username">Username</label>
             <input type="text" name="username"/>      
@@ -21,7 +21,7 @@ and open the template in the editor.
             <br />
             <button type="submit">Log in</button>
             <br />
-            <a th:href="@{/register}">Register</a>
+            <a th:href="@{/login}">Login</a>
         </form>
     </body>
 </html>
