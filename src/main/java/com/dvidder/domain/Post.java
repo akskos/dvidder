@@ -6,6 +6,7 @@
 package com.dvidder.domain;
 
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -21,9 +22,6 @@ public class Post {
     @Id
     @GeneratedValue(strategy=GenerationType.AUTO)
     private Long postId;
-    
-    @ManyToOne
-    Account owner;
 
     private String content;
 
@@ -33,14 +31,6 @@ public class Post {
 
     public void setPostId(Long postId) {
         this.postId = postId;
-    }
-
-    public Account getOwner() {
-        return owner;
-    }
-
-    public void setOwner(Account owner) {
-        this.owner = owner;
     }
 
     public String getContent() {

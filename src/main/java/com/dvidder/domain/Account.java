@@ -5,10 +5,13 @@
  */
 package com.dvidder.domain;
 
+import java.util.ArrayList;
+import java.util.List;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 
 /**
  *
@@ -23,6 +26,21 @@ public class Account {
     
     private String username;
     private String password;
+
+    @OneToMany
+    private List<Post> posts;
+    
+    public Account() {
+        posts = new ArrayList<>();
+    }
+    
+    public List<Post> getPosts() {
+        return posts;
+    }
+
+    public void setPosts(List<Post> posts) {
+        this.posts = posts;
+    }
 
     public Long getAccountId() {
         return accountId;
