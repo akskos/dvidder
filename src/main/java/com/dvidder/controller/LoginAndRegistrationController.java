@@ -5,8 +5,13 @@
  */
 package com.dvidder.controller;
 
+import com.dvidder.domain.Account;
+import com.dvidder.repository.AccountRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -17,6 +22,12 @@ import org.springframework.web.bind.annotation.RequestParam;
  */
 @Controller
 public class LoginAndRegistrationController {
+    
+    @Autowired
+    private AccountRepository accountRepository;
+    
+    @Autowired
+    private PasswordEncoder passwordEncoder;
 
     @RequestMapping("/login")
     public String login(@RequestParam(required = false) String logout) {
@@ -26,9 +37,18 @@ public class LoginAndRegistrationController {
         return "login";
     }
 
-    @RequestMapping(value = "/register", method = RequestMethod.GET)
+    @RequestMapping(value="/register", method=RequestMethod.GET)
     public String register() {
         return "register";
+    }
+    
+    @RequestMapping(value="/register", method=RequestMethod.POST)
+    public String createAccount(@RequestParam String username, @RequestParam String password) {
+        Account account = new Account();
+        account.setUsername(username);
+        account.setPassword(passwordEncoder.encode(password));
+        accountRepository.save(account);
+        return "redirect:/login";
     }
 
 }

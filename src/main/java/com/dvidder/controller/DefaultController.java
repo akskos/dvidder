@@ -5,7 +5,11 @@
  */
 package com.dvidder.controller;
 
+import com.dvidder.domain.Account;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
@@ -17,8 +21,9 @@ import org.springframework.web.bind.annotation.ResponseBody;
 public class DefaultController {
 
     @RequestMapping("/")
-    @ResponseBody
-    public String index() {
-        return "Share dveeds with your friends :)";
+    public String index(Model model) {
+        User currentUser = (User)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        model.addAttribute("username", currentUser.getUsername());
+        return "index";
     }
 }
