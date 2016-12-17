@@ -10,6 +10,7 @@ import com.dvidder.repository.AccountRepository;
 import javax.annotation.PostConstruct;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Profile;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
@@ -18,6 +19,7 @@ import org.springframework.stereotype.Component;
  * @author akseli
  */
 @Component
+@Profile("default")
 public class DevInitializer {
     
     @Autowired
