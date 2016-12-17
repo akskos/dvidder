@@ -35,7 +35,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
         // mahdollisuus kaikille. 
         http.authorizeRequests()
                 .anyRequest().authenticated().and()
-                .formLogin().permitAll().and()
+                .formLogin().loginPage("/login").permitAll().and()
                 .logout().permitAll();
     }
 
