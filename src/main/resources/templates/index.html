@@ -14,15 +14,9 @@ and open the template in the editor.
         <p>Share dveeds with your friends :)</p> <br />
         <p>Hi, <p th:text="${username}">username</p></p>
         <form th:action="@{/post}" method="post">
-            <label for="username">Username</label>
-            <input type="text" name="username"/>      
+            <textarea name="content"></textarea>
             <br />
-            <label for="password">Password</label>
-            <input type="password" name="password"/>  
-            <br />
-            <button type="submit">Log in</button>
-            <br />
-            <a th:href="@{/login}">Login</a>
+            <button type="submit">Dveed!</button>
         </form>
     </body>
 </html>
