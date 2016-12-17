@@ -28,12 +28,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
  */
 @Controller
 public class DefaultController {
-    
-    @Autowired
-    AccountRepository accountRepository;
-    
-    @Autowired
-    PostRepository postRepository;
 
     @Autowired
     PostService postService;
