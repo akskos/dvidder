@@ -13,25 +13,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 @Controller
 public class Dvidder {
 
-        @RequestMapping("/")
-        @ResponseBody
-        public String index() {
-            return "Share dveeds with your friends :)";
-        }
-        
-        @RequestMapping("/login")
-        public String login(@RequestParam(required=false) String logout) {
-            if (logout != null) {
-                SecurityContextHolder.clearContext();
-            }
-            return "login";
-        }
-        
-        @RequestMapping(value="/register", method=RequestMethod.GET)
-        public String register() {
-            return "register";
-        }
-    
 	public static void main(String[] args) {
 		SpringApplication.run(Dvidder.class, args);
 	}
