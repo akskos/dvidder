@@ -14,11 +14,16 @@ function search() {
         posts.forEach(function (post) {
             
             let date = new Date(post.date);
+            let tags = '';
+            post.tags.forEach(function(tag) {
+                tags += tag.name + ' ';
+            });
             
             let child = '<li>' + post.content + '<ul>' +
                         '<li>user: ' + username + '</li>' +
                         '<li>tags: tags not supported yet</li>' +
                         '<li>' + date + '</li>' +
+                        '<li>tags: ' + tags + '</li>' +
                         '</ul></li>';
             $("#dveedlist").append(child);
         });
