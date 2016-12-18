@@ -11,6 +11,7 @@ import com.dvidder.domain.Tag;
 import com.dvidder.repository.AccountRepository;
 import com.dvidder.repository.PostRepository;
 import com.dvidder.repository.TagRepository;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import javax.transaction.Transactional;
@@ -31,7 +32,7 @@ public class PostService {
 
     @Autowired
     PostRepository postRepository;
-    
+
     @Autowired
     TagRepository tagRepository;
 
@@ -45,13 +46,21 @@ public class PostService {
         Post post = new Post();
         post.setContent(content);
         post.setDate(new Date());
-        
+
         // Create tags for post from tag string
         String[] stringTags = tags.split(" ");
         for (int i = 0; i < stringTags.length; i++) {
-            Tag tag = new Tag();
-            tag.setName(stringTags[i]);
-            tagRepository.save(tag);
+            String tagName = stringTags[i];
+            
+            Tag tag;
+            if (tagRepository.findByName(tagName) == null) {
+                tag = new Tag();
+                tag.setName(stringTags[i]);
+                tagRepository.save(tag);
+            } else {
+                tag = tagRepository.findByName(tagName);
+            }
+                    
             post.getTags().add(tag);
         }
 
@@ -64,5 +73,16 @@ public class PostService {
     public List<Post> getPostsByUser(String username) {
         Account account = accountRepository.findByUsername(username);
         return account.getPosts();
+    }
+
+    public List<Post> getPostsByTag(String tagName) {
+        Tag tag = tagRepository.findByName(tagName);
+        List<Post> posts = new ArrayList<>();
+        for (Post p : postRepository.findAll()) {
+            if (p.getTags().contains(tag)) {
+                posts.add(p);
+            }
+        }
+        return posts;
     }
 }

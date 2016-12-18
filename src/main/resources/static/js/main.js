@@ -5,7 +5,7 @@
  */
 
 
-function search() {
+function searchByUser() {
     let username = $("#username-searchkey").val();
     let requestUri = '/posts?username=' + username;
     $.getJSON(requestUri, function (posts) {
@@ -21,6 +21,30 @@ function search() {
             
             let child = '<li>' + post.content + '<ul>' +
                         '<li>user: ' + username + '</li>' +
+                        '<li>tags: tags not supported yet</li>' +
+                        '<li>' + date + '</li>' +
+                        '<li>tags: ' + tags + '</li>' +
+                        '</ul></li>';
+            $("#dveedlist").append(child);
+        });
+    });
+}
+
+function searchByTag() {
+    let tag = $("#tag-searchkey").val();
+    let requestUri = '/posts?tag=' + tag;
+    $.getJSON(requestUri, function (posts) {
+        $("#dveedlist").empty();
+
+        posts.forEach(function (post) {
+            
+            let date = new Date(post.date);
+            let tags = '';
+            post.tags.forEach(function(tag) {
+                tags += tag.name + ' ';
+            });
+            
+            let child = '<li>' + post.content + '<ul>' +
                         '<li>tags: tags not supported yet</li>' +
                         '<li>' + date + '</li>' +
                         '<li>tags: ' + tags + '</li>' +

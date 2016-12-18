@@ -41,8 +41,12 @@ public class DefaultController {
     
     @RequestMapping(value="/posts", method=RequestMethod.GET, produces="application/json")
     @ResponseBody
-    public List<Post> postsByUser(@RequestParam String username) {
-       return postService.getPostsByUser(username);
+    public List<Post> listPosts(@RequestParam(required=false) String username, @RequestParam(required=false) String tag) {
+        if (username != null) {
+            return postService.getPostsByUser(username);
+        } else {
+            return postService.getPostsByTag(tag);
+        }
     }
     
     // Create a post

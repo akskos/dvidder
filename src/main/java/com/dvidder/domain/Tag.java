@@ -5,10 +5,15 @@
  */
 package com.dvidder.domain;
 
+import java.util.ArrayList;
+import java.util.List;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToMany;
 
 /**
  *
@@ -22,7 +27,7 @@ public class Tag {
     private Long tagId;
     
     private String name;
-
+    
     public Long getTagId() {
         return tagId;
     }
