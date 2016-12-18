@@ -8,12 +8,18 @@
 function search() {
     let username = $("#username-searchkey").val();
     let requestUri = '/posts?username=' + username;
-    console.log(requestUri);
     $.getJSON(requestUri, function (posts) {
         $("#dveedlist").empty();
 
         posts.forEach(function (post) {
-            let child = '<li>' + post.content + '<ul><li>user: ' + username + '</li><li>tags: tags not supported yet</li></ul></li>';
+            
+            let date = new Date(post.date);
+            
+            let child = '<li>' + post.content + '<ul>' +
+                        '<li>user: ' + username + '</li>' +
+                        '<li>tags: tags not supported yet</li>' +
+                        '<li>' + date + '</li>' +
+                        '</ul></li>';
             $("#dveedlist").append(child);
         });
     });
