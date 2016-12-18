@@ -47,8 +47,8 @@ public class DefaultController {
     
     // Create a post
     @RequestMapping(value="/post", method=RequestMethod.POST)
-    public String post(@RequestParam String content) {
-        postService.createPost(content);
+    public String post(@RequestParam String content, @RequestParam String tags) {
+        postService.createPost(content, tags);
         return "redirect:/";
     }
 }

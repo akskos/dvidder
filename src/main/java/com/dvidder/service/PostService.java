@@ -7,8 +7,10 @@ package com.dvidder.service;
 
 import com.dvidder.domain.Account;
 import com.dvidder.domain.Post;
+import com.dvidder.domain.Tag;
 import com.dvidder.repository.AccountRepository;
 import com.dvidder.repository.PostRepository;
+import com.dvidder.repository.TagRepository;
 import java.util.Date;
 import java.util.List;
 import javax.transaction.Transactional;
@@ -29,8 +31,11 @@ public class PostService {
 
     @Autowired
     PostRepository postRepository;
+    
+    @Autowired
+    TagRepository tagRepository;
 
-    public void createPost(String content) {
+    public void createPost(String content, String tags) {
 
         // Find current account
         User currentUser = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
@@ -40,6 +45,15 @@ public class PostService {
         Post post = new Post();
         post.setContent(content);
         post.setDate(new Date());
+        
+        // Create tags for post from tag string
+        String[] stringTags = tags.split(" ");
+        for (int i = 0; i < stringTags.length; i++) {
+            Tag tag = new Tag();
+            tag.setName(stringTags[i]);
+            tagRepository.save(tag);
+            post.getTags().add(tag);
+        }
 
         currentAccount.getPosts().add(post);
 
