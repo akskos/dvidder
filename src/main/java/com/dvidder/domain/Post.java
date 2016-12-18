@@ -13,6 +13,7 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 
@@ -30,7 +31,7 @@ public class Post {
     private String content;
     private Date date;
     
-    @OneToMany
+    @ManyToMany
     private List<Tag> tags;
     
     public Post() {
