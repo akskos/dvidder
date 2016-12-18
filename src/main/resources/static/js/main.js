@@ -9,8 +9,12 @@ function search() {
     let username = $("#username-searchkey").val();
     let requestUri = '/posts?username=' + username;
     console.log(requestUri);
-    $.getJSON(requestUri, function(posts) {
+    $.getJSON(requestUri, function (posts) {
         $("#dveedlist").empty();
-        $("#dveedlist").append("<li>" + posts[0].content + "</li>")
+
+        posts.forEach(function (post) {
+            let child = '<li>' + post.content + '<ul><li>user: ' + username + '</li><li>tags: tags not supported yet</li></ul></li>';
+            $("#dveedlist").append(child);
+        });
     });
 }
