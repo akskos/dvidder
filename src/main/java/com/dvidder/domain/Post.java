@@ -5,6 +5,7 @@
  */
 package com.dvidder.domain;
 
+import java.util.Date;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -24,6 +25,7 @@ public class Post {
     private Long postId;
 
     private String content;
+    private Date date;
 
     public Long getPostId() {
         return postId;
@@ -40,4 +42,14 @@ public class Post {
     public void setContent(String content) {
         this.content = content;
     }
+
+    public Date getDate() {
+        return date;
+    }
+
+    public void setDate(Date date) {
+        this.date = date;
+    }
+
+    
 }

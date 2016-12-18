@@ -9,6 +9,7 @@ import com.dvidder.domain.Account;
 import com.dvidder.domain.Post;
 import com.dvidder.repository.AccountRepository;
 import com.dvidder.repository.PostRepository;
+import java.util.Date;
 import java.util.List;
 import javax.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,6 +39,7 @@ public class PostService {
         // Create the post
         Post post = new Post();
         post.setContent(content);
+        post.setDate(new Date());
 
         currentAccount.getPosts().add(post);
 
