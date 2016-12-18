@@ -18,6 +18,9 @@ and open the template in the editor.
         <form th:action="@{/post}" method="post">
             <textarea name="content"></textarea>
             <br />
+            <label for="tags">Tags: </label>
+            <input type="text" id="tags" name="tags" placeholder="separated by space" />
+            <br />
             <button type="submit">Dveed!</button>
         </form>
         <br />
