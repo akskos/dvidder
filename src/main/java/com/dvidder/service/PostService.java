@@ -18,6 +18,7 @@ import javax.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.User;
+import org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestWrapper;
 import org.springframework.stereotype.Service;
 
 /**
@@ -91,9 +92,10 @@ public class PostService {
         User currentUser = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         Post post = postRepository.findOne(Long.parseLong(id));
         
+        Account account = accountRepository.findByUsername(currentUser.getUsername());
+        
         // Verify authority
-        if (post.getSender().equals(currentUser.getUsername())) {
-            Account account = accountRepository.findByUsername(currentUser.getUsername());
+        if (post.getSender().equals(currentUser.getUsername()) || account.isAdmin()) {
             account.getPosts().remove(post);
             postRepository.delete(Long.parseLong(id));
             

@@ -7,7 +7,9 @@ package com.dvidder.service;
 
 import com.dvidder.domain.Account;
 import com.dvidder.repository.AccountRepository;
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -32,6 +34,14 @@ public class CustomUserDetailsService implements UserDetailsService {
             throw new UsernameNotFoundException("No such user: " + username);
         }
 
+        List<SimpleGrantedAuthority> authorities = new ArrayList<>();
+        authorities.add(new SimpleGrantedAuthority("USER"));
+        
+        // Add admin authority when appropriate
+        if (account.isAdmin()) {
+            authorities.add(new SimpleGrantedAuthority("ADMIN"));
+        }
+        
         return new org.springframework.security.core.userdetails.User(
                 account.getUsername(),
                 account.getPassword(),
@@ -39,6 +49,6 @@ public class CustomUserDetailsService implements UserDetailsService {
                 true,
                 true,
                 true,
-                Arrays.asList(new SimpleGrantedAuthority("USER")));
+                authorities);
     }
 }
