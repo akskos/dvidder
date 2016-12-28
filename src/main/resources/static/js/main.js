@@ -37,7 +37,6 @@ function searchByUser() {
             
             let child = '<li>' + post.content + '<ul>' +
                         '<li>user: ' + username + '</li>' +
-                        '<li>tags: tags not supported yet</li>' +
                         '<li>' + date + '</li>' +
                         '<li>tags: ' + tags + '</li>';
 
@@ -66,7 +65,6 @@ function searchByTag() {
             });
             
             let child = '<li>' + post.content + '<ul>' +
-                        '<li>tags: tags not supported yet</li>' +
                         '<li>' + date + '</li>' +
                         '<li>tags: ' + tags + '</li>' +
                         '</ul></li>';
