@@ -44,6 +44,11 @@ public class LoginAndRegistrationController {
     
     @RequestMapping(value="/register", method=RequestMethod.POST)
     public String createAccount(@RequestParam String username, @RequestParam String password) {
+        
+        if (accountRepository.findByUsername(username) != null) {
+            return "redirect:/register?error";
+        }
+        
         Account account = new Account();
         account.setUsername(username);
         account.setPassword(passwordEncoder.encode(password));
