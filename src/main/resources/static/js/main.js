@@ -37,6 +37,7 @@ function constructPostHTML(post) {
         child += '<li><a href="#" onclick="deletePost(' + post.postId + ')">Delete</a></li>'
     }
     
+    child += '<li>Likes: ' + post.likers.length + '</li>'
     child += '<li><a href="#" onclick="likePost(' + post.postId + ')">Like</a></li>'
 
     child += '</ul></li>';
