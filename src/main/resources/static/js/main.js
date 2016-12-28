@@ -21,6 +21,29 @@ $(document).ready(function() {
     })
 });
 
+function constructPostHTML(post) {
+    let date = new Date(post.date);
+    let tags = '';
+    post.tags.forEach(function(tag) {
+        tags += tag.name + ' ';
+    });
+
+    let child = '<li>' + post.content + '<ul>' +
+                '<li>user: ' + post.sender + '</li>' +
+                '<li>' + date + '</li>' +
+                '<li>tags: ' + tags + '</li>';
+
+    if (username === post.sender) {
+        child += '<li><a href="#" onclick="deletePost(' + post.postId + ')">Delete</a></li>'
+    }
+    
+    child += '<li><a href="#" onclick="likePost(' + post.postId + ')">Like</a></li>'
+
+    child += '</ul></li>';
+    
+    return child;
+}
+
 function searchByUser() {
     let username = $("#username-searchkey").val();
     let requestUri = '/posts?username=' + username;
@@ -29,23 +52,8 @@ function searchByUser() {
 
         posts.forEach(function (post) {
             
-            let date = new Date(post.date);
-            let tags = '';
-            post.tags.forEach(function(tag) {
-                tags += tag.name + ' ';
-            });
-            
-            let child = '<li>' + post.content + '<ul>' +
-                        '<li>user: ' + username + '</li>' +
-                        '<li>' + date + '</li>' +
-                        '<li>tags: ' + tags + '</li>';
-
-            if (username === post.sender) {
-                child += '<li><a href="#" onclick="deletePost(' + post.postId + ')">Delete</a></li>'
-            }
-
-            child += '</ul></li>';
-            $("#dveedlist").append(child);
+            var postHTML = constructPostHTML(post);
+            $("#dveedlist").append(postHTML);
         });
     });
 }
@@ -58,17 +66,8 @@ function searchByTag() {
 
         posts.forEach(function (post) {
             
-            let date = new Date(post.date);
-            let tags = '';
-            post.tags.forEach(function(tag) {
-                tags += tag.name + ' ';
-            });
-            
-            let child = '<li>' + post.content + '<ul>' +
-                        '<li>' + date + '</li>' +
-                        '<li>tags: ' + tags + '</li>' +
-                        '</ul></li>';
-            $("#dveedlist").append(child);
+            var postHTML = constructPostHTML(post);
+            $("#dveedlist").append(postHTML);
         });
     });
 }
@@ -78,6 +77,20 @@ function deletePost(id) {
     $.ajax({
         url: '/post/' + id,
         type: 'delete',
+        headers: {
+            'X-CSRF-TOKEN': getCSRFToken()
+        },
+        success: function(result) {
+            
+        }
+    })
+}
+
+function likePost(id) {
+    console.log('liking post ' + id);
+    $.ajax({
+        url: '/posts/' + id + '/like',
+        type: 'post',
         headers: {
             'X-CSRF-TOKEN': getCSRFToken()
         },
