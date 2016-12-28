@@ -38,7 +38,7 @@ function constructPostHTML(post) {
     }
     
     if (account.admin) {
-        child += '<li><a href="#" onclick="deleteAccount(' + post.sender + ')">Delete account</a></li>';
+        child += '<li><a href="#" onclick="deleteAccount(\"' + post.sender + '\")">Delete account</a></li>';
     }
     
     child += '<li>Likes: ' + post.likers.length + '</li>'
