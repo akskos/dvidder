@@ -30,6 +30,15 @@ public class Post {
 
     private String content;
     private Date date;
+    private String sender;
+
+    public String getSender() {
+        return sender;
+    }
+
+    public void setSender(String sender) {
+        this.sender = sender;
+    }
     
     @ManyToMany
     private List<Tag> tags;

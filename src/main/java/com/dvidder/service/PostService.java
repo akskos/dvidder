@@ -46,6 +46,7 @@ public class PostService {
         Post post = new Post();
         post.setContent(content);
         post.setDate(new Date());
+        post.setSender(currentAccount.getUsername());
 
         // Create tags for post from tag string
         String[] stringTags = tags.split(" ");
@@ -84,5 +85,19 @@ public class PostService {
             }
         }
         return posts;
+    }
+    
+    public Post deletePost(String id) {
+        User currentUser = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        Post post = postRepository.findOne(Long.parseLong(id));
+        
+        // Verify authority
+        if (post.getSender().equals(currentUser.getUsername())) {
+            Account account = accountRepository.findByUsername(currentUser.getUsername());
+            account.getPosts().remove(post);
+            postRepository.delete(Long.parseLong(id));
+        }
+        
+        return post;
     }
 }

@@ -8,6 +8,8 @@ var username = "";
 
 $(document).ready(function() {
    
+   console.log(getCSRFToken());
+   
     // Find username
     $.ajax({
         url: '/account',
@@ -37,8 +39,13 @@ function searchByUser() {
                         '<li>user: ' + username + '</li>' +
                         '<li>tags: tags not supported yet</li>' +
                         '<li>' + date + '</li>' +
-                        '<li>tags: ' + tags + '</li>' +
-                        '</ul></li>';
+                        '<li>tags: ' + tags + '</li>';
+
+            if (username === post.sender) {
+                child += '<li><a href="#" onclick="deletePost(' + post.postId + ')">Delete</a></li>'
+            }
+
+            child += '</ul></li>';
             $("#dveedlist").append(child);
         });
     });
@@ -66,4 +73,22 @@ function searchByTag() {
             $("#dveedlist").append(child);
         });
     });
+}
+
+function deletePost(id) {
+    console.log('deleting post ' + id);
+    $.ajax({
+        url: '/post/' + id,
+        type: 'delete',
+        headers: {
+            'X-CSRF-TOKEN': getCSRFToken()
+        },
+        success: function(result) {
+            
+        }
+    })
+}
+
+function getCSRFToken() {
+    return $('meta[name="_csrf"]').attr('content');
 }

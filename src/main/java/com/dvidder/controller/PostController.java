@@ -9,6 +9,7 @@ import com.dvidder.domain.Post;
 import com.dvidder.service.PostService;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -19,6 +20,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
  *
  * @author akseli
  */
+@Controller
 public class PostController {
     
     @Autowired
@@ -39,5 +41,13 @@ public class PostController {
     public String post(@RequestParam String content, @RequestParam String tags) {
         postService.createPost(content, tags);
         return "redirect:/";
+    }
+    
+    // Delete a post
+    @RequestMapping(value="/post/{id}", method=RequestMethod.DELETE)
+    @ResponseBody
+    public String deletePost(@PathVariable String id) {
+        postService.deletePost(id);
+        return "success";
     }
 }
