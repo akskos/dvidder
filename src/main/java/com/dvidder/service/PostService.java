@@ -87,7 +87,7 @@ public class PostService {
         return posts;
     }
     
-    public Post deletePost(String id) {
+    public boolean deletePost(String id) {
         User currentUser = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         Post post = postRepository.findOne(Long.parseLong(id));
         
@@ -96,8 +96,10 @@ public class PostService {
             Account account = accountRepository.findByUsername(currentUser.getUsername());
             account.getPosts().remove(post);
             postRepository.delete(Long.parseLong(id));
+            
+            return true;
         }
         
-        return post;
+        return false;
     }
 }
