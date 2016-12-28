@@ -4,6 +4,20 @@
  * and open the template in the editor.
  */
 
+var username = "";
+
+$(document).ready(function() {
+   
+    // Find username
+    $.ajax({
+        url: '/account',
+        type: 'GET',
+        success: function(result) {
+            username = result.username;
+            console.log('my username is ' + result.username);
+        }
+    })
+});
 
 function searchByUser() {
     let username = $("#username-searchkey").val();

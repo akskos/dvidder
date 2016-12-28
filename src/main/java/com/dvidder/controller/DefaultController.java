@@ -30,7 +30,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 public class DefaultController {
 
     @Autowired
-    PostService postService;
+    AccountRepository accountRepository;
     
     @RequestMapping("/")
     public String index(Model model) {
@@ -39,20 +39,11 @@ public class DefaultController {
         return "index";
     }
     
-    @RequestMapping(value="/posts", method=RequestMethod.GET, produces="application/json")
+    @RequestMapping(value="/account", method=RequestMethod.GET, produces="application/json")
     @ResponseBody
-    public List<Post> listPosts(@RequestParam(required=false) String username, @RequestParam(required=false) String tag) {
-        if (username != null) {
-            return postService.getPostsByUser(username);
-        } else {
-            return postService.getPostsByTag(tag);
-        }
-    }
-    
-    // Create a post
-    @RequestMapping(value="/post", method=RequestMethod.POST)
-    public String post(@RequestParam String content, @RequestParam String tags) {
-        postService.createPost(content, tags);
-        return "redirect:/";
+    public Account account() {
+        User currentUser = (User)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        Account account = accountRepository.findByUsername(currentUser.getUsername());
+        return account;
     }
 }
