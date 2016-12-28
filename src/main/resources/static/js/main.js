@@ -4,7 +4,7 @@
  * and open the template in the editor.
  */
 
-var username = "";
+var account = "";
 
 $(document).ready(function() {
    
@@ -15,7 +15,7 @@ $(document).ready(function() {
         url: '/account',
         type: 'GET',
         success: function(result) {
-            username = result.username;
+            account = result;
             console.log('my username is ' + result.username);
         }
     })
@@ -33,8 +33,12 @@ function constructPostHTML(post) {
                 '<li>' + date + '</li>' +
                 '<li>tags: ' + tags + '</li>';
 
-    if (username === post.sender) {
-        child += '<li><a href="#" onclick="deletePost(' + post.postId + ')">Delete</a></li>'
+    if (account.username === post.sender) {
+        child += '<li><a href="#" onclick="deletePost(' + post.postId + ')">Delete</a></li>';
+    }
+    
+    if (account.admin) {
+        child += '<li><a href="#" onclick="deleteAccount(' + post.sender + ')">Delete account</a></li>';
     }
     
     child += '<li>Likes: ' + post.likers.length + '</li>'
@@ -84,7 +88,21 @@ function deletePost(id) {
         success: function(result) {
             
         }
-    })
+    });
+}
+
+function deleteAccount(username) {
+    console.log('deleting account ' + username);
+    $.ajax({
+       url: '/account/' + username,
+       type: 'delete',
+       headers: {
+           'X-CSRF-TOKEN': getCSRFToken()
+       },
+       success: function(result) {
+           
+       }
+    });
 }
 
 function likePost(id) {

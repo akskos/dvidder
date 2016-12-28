@@ -98,7 +98,6 @@ public class PostService {
         if (post.getSender().equals(currentUser.getUsername()) || account.isAdmin()) {
             account.getPosts().remove(post);
             postRepository.delete(Long.parseLong(id));
-            
             return true;
         }
         

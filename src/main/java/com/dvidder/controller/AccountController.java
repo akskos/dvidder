@@ -6,20 +6,16 @@
 package com.dvidder.controller;
 
 import com.dvidder.domain.Account;
-import com.dvidder.domain.Post;
 import com.dvidder.repository.AccountRepository;
-import com.dvidder.repository.PostRepository;
-import com.dvidder.service.PostService;
-import java.util.List;
-import javax.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 /**
@@ -27,15 +23,24 @@ import org.springframework.web.bind.annotation.ResponseBody;
  * @author akseli
  */
 @Controller
-public class DefaultController {
-
+public class AccountController {
+    
     @Autowired
     AccountRepository accountRepository;
     
-    @RequestMapping("/")
-    public String index(Model model) {
+    @RequestMapping(value="/account", method=RequestMethod.GET, produces="application/json")
+    @ResponseBody
+    public Account account() {
         User currentUser = (User)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        model.addAttribute("username", currentUser.getUsername());
-        return "index";
+        Account account = accountRepository.findByUsername(currentUser.getUsername());
+        return account;
+    }
+    
+    @RequestMapping(value="/account/{username}", method=RequestMethod.DELETE, produces="application/json")
+    @ResponseBody
+    public ResponseEntity<String> deleteAccount(@PathVariable String username) {
+        Account account = accountRepository.findByUsername(username);
+        accountRepository.delete(account);
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 }
