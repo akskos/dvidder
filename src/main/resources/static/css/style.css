@@ -1,0 +1,17 @@
+body {
+    background-color: #111;
+}
+
+.user-details-container {
+    background-color: whitesmoke;
+    padding: 30px 30px 30px 30px;
+}
+
+#logo {
+    max-width: 100%;
+}
+
+#logo-container {
+    background: red;
+    max-width: 100%;
+}

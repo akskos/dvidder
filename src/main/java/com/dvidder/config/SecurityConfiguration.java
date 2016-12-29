@@ -36,6 +36,8 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
         // mahdollisuus kaikille. 
         http.authorizeRequests()
                 .antMatchers("/register").permitAll()
+                .antMatchers("/css/**").permitAll()
+                .antMatchers("/img/**").permitAll()
                 .antMatchers(HttpMethod.DELETE, "/account").hasAuthority("ADMIN")
                 .anyRequest().authenticated().and()
                 .formLogin().loginPage("/login").permitAll().and()
