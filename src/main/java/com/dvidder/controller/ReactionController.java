@@ -7,6 +7,7 @@ package com.dvidder.controller;
 
 import com.dvidder.domain.Post;
 import com.dvidder.repository.PostRepository;
+import com.dvidder.service.ReactionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.User;
@@ -25,21 +26,11 @@ import org.springframework.web.bind.annotation.ResponseBody;
 public class ReactionController {
     
     @Autowired
-    private PostRepository postRepository;
+    private ReactionService reactionService;
     
     @RequestMapping(value="/posts/{id}/like", method=RequestMethod.POST)
     @ResponseBody
     public Post like(@PathVariable String id) {
-        
-        Post post = postRepository.findOne(Long.parseLong(id));
-        User currentUser = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        String username = currentUser.getUsername();
-        
-        if (!post.getLikers().contains(username)) {
-            post.getLikers().add(username);
-            postRepository.save(post);
-        }
-        
-        return post;
+        return reactionService.like(id);
     }
 }

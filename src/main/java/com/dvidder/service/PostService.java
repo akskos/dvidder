@@ -20,6 +20,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestWrapper;
 import org.springframework.stereotype.Service;
+import org.springframework.validation.FieldError;
 
 /**
  *
@@ -109,5 +110,25 @@ public class PostService {
         }
         
         return false;
+    }
+    
+    public boolean validNumberOfTags(String tags) {
+        String[] stringTags = tags.split(" ");
+        if (stringTags.length > 4) {
+            return false;
+        }
+        return true;
+    }
+    
+    public boolean validTags(String tags) {
+        String[] stringTags = tags.split(" ");
+        for (int i = 0; i < stringTags.length; i++) {
+            String tagName = stringTags[i];
+            
+            if (tagName.length() > 10) {
+                return false;
+            }
+        }
+        return true;
     }
 }

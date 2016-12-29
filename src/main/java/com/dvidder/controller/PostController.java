@@ -33,61 +33,55 @@ import org.springframework.web.bind.annotation.ResponseBody;
  */
 @Controller
 public class PostController {
-    
+
     @Autowired
     PostService postService;
-    
+
     @ModelAttribute
     private PostForm getPostForm() {
         return new PostForm();
     }
-    
+
     // List posts
-    @RequestMapping(value="/posts", method=RequestMethod.GET, produces="application/json")
+    @RequestMapping(value = "/posts", method = RequestMethod.GET, produces = "application/json")
     @ResponseBody
-    public List<Post> listPosts(@RequestParam(required=false) String username, @RequestParam(required=false) String tag) {
+    public List<Post> listPosts(@RequestParam(required = false) String username, @RequestParam(required = false) String tag) {
         if (username != null) {
             return postService.getPostsByUser(username);
         } else {
             return postService.getPostsByTag(tag);
         }
     }
-    
+
     // Create a post
-    @RequestMapping(value="/post", method=RequestMethod.POST)
+    @RequestMapping(value = "/post", method = RequestMethod.POST)
     public String post(@Valid @ModelAttribute PostForm postForm, BindingResult bindingResult) {
-        
+
         String content = postForm.getContent();
         String tags = postForm.getTags();
-        
+
         // Validate tags
-        String[] stringTags = tags.split(" ");
-        if (stringTags.length > 4) {
+        if (!postService.validNumberOfTags(tags)) {
             bindingResult.addError(new FieldError("postForm", "tags", "no more than 4 tags per dveed"));
         }
-        for (int i = 0; i < stringTags.length; i++) {
-            String tagName = stringTags[i];
-            
-            if (tagName.length() > 10) {
-                bindingResult.addError(new FieldError("postForm", "tags", "tags can't be over 10 characters long"));
-                break;
-            }
+        if (!postService.validTags(tags)) {
+            bindingResult.addError(new FieldError("postForm", "tags", "tags can't be over 10 characters long"));
         }
-        
+
         if (bindingResult.hasErrors()) {
             return "index";
         }
-        
+
         postService.createPost(content, tags);
-    
+
         return "redirect:/";
     }
-    
+
     // Delete a post
-    @RequestMapping(value="/post/{id}", method=RequestMethod.DELETE)
+    @RequestMapping(value = "/post/{id}", method = RequestMethod.DELETE)
     @ResponseBody
     public ResponseEntity<String> deletePost(@PathVariable String id) {
-        if (postService.deletePost(id)) { 
+        if (postService.deletePost(id)) {
             return new ResponseEntity<String>(HttpStatus.OK);
         }
         return new ResponseEntity<String>(HttpStatus.FORBIDDEN);

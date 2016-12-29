@@ -10,6 +10,7 @@ import com.dvidder.domain.Post;
 import com.dvidder.repository.AccountRepository;
 import com.dvidder.repository.PostRepository;
 import com.dvidder.service.PostService;
+import com.dvidder.service.ProfileService;
 import com.dvidder.validation.PostForm;
 import java.util.List;
 import javax.transaction.Transactional;
@@ -31,6 +32,9 @@ import org.springframework.web.bind.annotation.ResponseBody;
 @Controller
 public class DefaultController {
     
+    @Autowired
+    private ProfileService profileService;
+    
     @ModelAttribute
     private PostForm getPostForm() {
         return new PostForm();
@@ -38,8 +42,7 @@ public class DefaultController {
 
     @RequestMapping("/")
     public String index(Model model) {
-        User currentUser = (User)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        model.addAttribute("username", currentUser.getUsername());
+        model.addAttribute("username", profileService.getCurrentUsername());
         return "index";
     }
 }

@@ -20,7 +20,7 @@ import org.springframework.stereotype.Component;
  */
 @Component
 @Profile("default")
-public class DevInitializer {
+public class DefaultProfile {
     
     @Autowired
     AccountRepository accountRepository;

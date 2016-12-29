@@ -7,6 +7,7 @@ package com.dvidder.controller;
 
 import com.dvidder.domain.Account;
 import com.dvidder.repository.AccountRepository;
+import com.dvidder.service.RegistrationService;
 import com.dvidder.validation.RegistrationForm;
 import javax.validation.Valid;
 import org.hibernate.validator.constraints.Length;
@@ -31,10 +32,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 public class LoginAndRegistrationController {
     
     @Autowired
-    private AccountRepository accountRepository;
-    
-    @Autowired
-    private PasswordEncoder passwordEncoder;
+    private RegistrationService registrationService;
     
     @ModelAttribute
     private RegistrationForm getRegistrationForm() {
@@ -60,7 +58,7 @@ public class LoginAndRegistrationController {
         String username = registrationForm.getUsername();
         String password = registrationForm.getPassword();
         
-        if (accountRepository.findByUsername(username) != null) {
+        if (!registrationService.availableUsername(username)) {
             bindingResult.addError(new FieldError("registrationForm", "username", "username not available"));
         }
         
@@ -68,10 +66,8 @@ public class LoginAndRegistrationController {
             return "register";
         }
         
-        Account account = new Account();
-        account.setUsername(username);
-        account.setPassword(passwordEncoder.encode(password));
-        accountRepository.save(account);
+        registrationService.registerAccount(username, password);
+        
         return "redirect:/login";
     }
 
