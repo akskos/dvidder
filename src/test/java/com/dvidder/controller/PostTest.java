@@ -9,6 +9,7 @@ import com.dvidder.repository.PostRepository;
 import com.dvidder.repository.TagRepository;
 import com.dvidder.service.PostService;
 import com.dvidder.service.PostService;
+import com.dvidder.service.ProfileService;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
@@ -16,10 +17,13 @@ import static org.junit.Assert.assertEquals;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.mockito.Mockito;
+import static org.mockito.Mockito.when;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.test.context.support.WithUserDetails;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
@@ -73,5 +77,14 @@ public class PostTest {
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8))
                 .andExpect(MockMvcResultMatchers.jsonPath("$[0].content").value("this is a post"));
+    }
+    
+    @Test
+    @WithUserDetails("test_user")
+    public void createPost() throws Exception {
+        mockMvc.perform(post("/post?content=Hello&tags=a b"));
+        mockMvc.perform(get("/posts?username=test_user"))
+                .andExpect(status().isOk())
+                .andExpect(MockMvcResultMatchers.jsonPath("$[1].content").value("Hello"));
     }
 }

@@ -23,8 +23,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
  * @author akseli
  */
 @Controller
-public class AccountController {
-    
+public class AccountController { 
+   
     @Autowired
     AccountRepository accountRepository;
     

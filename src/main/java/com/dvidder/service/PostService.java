@@ -36,12 +36,14 @@ public class PostService {
 
     @Autowired
     TagRepository tagRepository;
+    
+    @Autowired
+    ProfileService profileService;
 
     public void createPost(String content, String tags) {
 
         // Find current account
-        User currentUser = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        Account currentAccount = accountRepository.findByUsername(currentUser.getUsername());
+        Account currentAccount = accountRepository.findByUsername(profileService.getCurrentUsername());
 
         // Create the post
         Post post = new Post();
