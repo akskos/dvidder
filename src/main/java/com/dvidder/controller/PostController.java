@@ -6,13 +6,21 @@
 package com.dvidder.controller;
 
 import com.dvidder.domain.Post;
+import com.dvidder.domain.Tag;
 import com.dvidder.service.PostService;
+import com.dvidder.validation.PostForm;
 import java.util.ArrayList;
 import java.util.List;
+import javax.validation.Valid;
+import org.hibernate.validator.constraints.Length;
+import org.hibernate.validator.constraints.NotEmpty;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.FieldError;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -29,6 +37,12 @@ public class PostController {
     @Autowired
     PostService postService;
     
+    @ModelAttribute
+    private PostForm getPostForm() {
+        return new PostForm();
+    }
+    
+    // List posts
     @RequestMapping(value="/posts", method=RequestMethod.GET, produces="application/json")
     @ResponseBody
     public List<Post> listPosts(@RequestParam(required=false) String username, @RequestParam(required=false) String tag) {
@@ -41,9 +55,32 @@ public class PostController {
     
     // Create a post
     @RequestMapping(value="/post", method=RequestMethod.POST)
-    @ResponseBody
-    public Post post(@RequestParam String content, @RequestParam String tags) {
-        return postService.createPost(content, tags);
+    public String post(@Valid @ModelAttribute PostForm postForm, BindingResult bindingResult) {
+        
+        String content = postForm.getContent();
+        String tags = postForm.getTags();
+        
+        // Validate tags
+        String[] stringTags = tags.split(" ");
+        if (stringTags.length > 4) {
+            bindingResult.addError(new FieldError("postForm", "tags", "no more than 4 tags per dveed"));
+        }
+        for (int i = 0; i < stringTags.length; i++) {
+            String tagName = stringTags[i];
+            
+            if (tagName.length() > 10) {
+                bindingResult.addError(new FieldError("postForm", "tags", "tags can't be over 10 characters long"));
+                break;
+            }
+        }
+        
+        if (bindingResult.hasErrors()) {
+            return "index";
+        }
+        
+        postService.createPost(content, tags);
+    
+        return "redirect:/";
     }
     
     // Delete a post
