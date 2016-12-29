@@ -28,23 +28,22 @@ function constructPostHTML(post) {
         tags += tag.name + ' ';
     });
 
-    let child = '<li>' + post.content + '<ul>' +
-                '<li>user: ' + post.sender + '</li>' +
-                '<li>' + date + '</li>' +
-                '<li>tags: ' + tags + '</li>';
+    let child = '<li><div class=\'post\'><img src=\'/img/default-profile-pic.png\' class=\'profile-pic\'></img><p id="username">' + post.sender +
+                '</p><br /><br /><p>' + post.content + '</p> <br />' +
+                '<small>' + date + ' </small>' +
+                '<small>tags: ' + tags + '</small>';
 
+    child += '<a href="#" onclick="likePost(' + post.postId + ')">Like (' + post.likers.length + ') </a>'
+    
     if (account.username === post.sender) {
-        child += '<li><a href="#" onclick="deletePost(' + post.postId + ')">Delete</a></li>';
+        child += '<a href="#" onclick="deletePost(' + post.postId + ')">Delete</a>';
     }
     
     if (account.admin) {
-        child += '<li><a href="#" onclick="deleteAccount(\'' + post.sender + '\')">Delete account</a></li>';
+        child += '<a href="#" onclick="deleteAccount(\'' + post.sender + '\')">Delete account</a>';
     }
-    
-    child += '<li>Likes: ' + post.likers.length + '</li>'
-    child += '<li><a href="#" onclick="likePost(' + post.postId + ')">Like</a></li>'
 
-    child += '</ul></li>';
+    child += '</li></div>';
     
     return child;
 }

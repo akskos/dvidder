@@ -11,30 +11,58 @@ and open the template in the editor.
         <meta name="viewport" content="width=device-width, initial-scale=1.0"></meta>
         <meta name="_csrf" th:content="${_csrf.token}"/>
         <meta name="_csrf_header" th:content="${_csrf.headerName}"/>
+
+        <!-- jQuery -->
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+
+        <!-- Bootstrap -->
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous"></link>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+
         <script type="text/javascript" src="js/main.js"></script>
+        <link rel="stylesheet" href="css/style.css"></link>
     </head>
     <body>
-        <p>Share dveeds with your friends :)</p> <br />
-        <p>Hi, <p th:text="${username}">username</p> </p>
-        <textarea id="post-content"></textarea>
-        <br />
-        <label for="tags">Tags: </label>
-        <input type="text" id="post-tags" name="tags" placeholder="separated by space" />
-        <br />
-        <button onclick="createPost()">Dveed!</button>
-        <br />
-        
-        <label for="username-searchkey">Find dveeds by user: </label> <br />
-        <input type="text" id="username-searchkey" placeholder="username" />
-        <button onclick="searchByUser()">Search</button>
-        <br />
-        <label for="username-searchkey">Find dveeds by tag: </label> <br />
-        <input type="text" id="tag-searchkey" placeholder="tag" />
-        <button onclick="searchByTag()">Search</button>
-        
-        <ul id="dveedlist">
-            
-        </ul>
-</body>
+        <div class="container">
+            <div class="row">
+                <div class="top-container">
+                    <center>
+                        <img src="/img/logo.png" id="logo"></img> <br /> <br />
+                        <h1 class="greeting">Hi </h1><h1 class="greeting" th:text="${username}">username</h1><h1 class="greeting">, share dveeds with your friends :)</h1>
+                    </center>
+                    <div class="empty-block"></div>
+                    <div class="form-group">
+                        <textarea placeholder="Share your ideas, feelings, thoughts on the day..." rows="4" class="form-control" id="post-content"></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label for="tags">Tags: </label>
+                        <input class="form-control" type="text" id="post-tags" name="tags" placeholder="separated by space" />
+                    </div>
+
+                    <button onclick="createPost()" class="btn btn-primary">Dveed!</button>
+                </div>
+                <div class="bottom-container">
+                    <div class="form-group">
+                        <label for="username-searchkey">Find dveeds by user: </label> <br />
+                        <input class="form-control" type="text" id="username-searchkey" placeholder="username" />
+                    </div>
+                    <button onclick="searchByUser()" class="btn btn-primary">Search</button>
+                    <br /><br />
+                    
+                    <div class="form-group">
+                        <label for="username-searchkey">Find dveeds by tag: </label> <br />
+                        <input class="form-control" type="text" id="tag-searchkey" placeholder="tag" />
+                    </div>
+
+                    <button class="btn btn-primary" onclick="searchByTag()">Search</button>
+                    
+                    <div class="empty-block"></div>
+
+                    <ul id="dveedlist">
+
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </body>
 </html>

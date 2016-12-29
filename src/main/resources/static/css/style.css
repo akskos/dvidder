@@ -7,6 +7,16 @@ body {
     padding: 30px 30px 30px 30px;
 }
 
+.top-container {
+    background-color: whitesmoke;
+    padding: 30px 30px 30px 30px;
+}
+
+.bottom-container {
+    background-color: #ccc;
+    padding: 30px 30px 30px 30px;
+}
+
 #logo {
     max-width: 100%;
 }
@@ -14,4 +24,45 @@ body {
 #logo-container {
     background: red;
     max-width: 100%;
+}
+
+.greeting {
+    display: inline;
+}
+
+h1 {
+    font-size: 16pt;
+    color: darkgray;
+}
+
+textarea {
+    max-width: 100%;
+}
+
+.empty-block {
+    height: 50px;
+}
+
+ul {
+    padding: 0px;
+}
+
+li {
+    list-style-type: none;
+}
+
+.post {
+    background-color: ghostwhite;
+    padding: 10px 10px 10px 10px;
+    margin-bottom: 20px;
+}
+
+.profile-pic {
+    max-width: 50px;
+}
+
+p#username {
+    display: inline;
+    padding-left: 10px;
+    font-size: 14pt;
 }
