@@ -49,6 +49,18 @@ public class ReactionTest {
         mockMvc.perform(post("/posts/1/like"))
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8))
-                .andExpect(MockMvcResultMatchers.jsonPath("$.reactions[0].reactor").value("test_user"));
+                .andExpect(MockMvcResultMatchers.jsonPath("$.reactions[0].reactor").value("test_user"))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.reactions[0].reactionName").value("like"));
+    }
+    
+    @Test
+    @WithUserDetails("test_user")
+    public void dislikePost() throws Exception {
+        
+        mockMvc.perform(post("/posts/1/dislike"))
+                .andExpect(status().isOk())
+                .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.reactions[0].reactor").value("test_user"))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.reactions[0].reactionName").value("dislike"));
     }
 }
