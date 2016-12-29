@@ -45,6 +45,7 @@ public class ReactionTest {
     @Test
     @WithUserDetails("test_user")
     public void likePost() throws Exception {
+        
         mockMvc.perform(post("/posts/1/like"))
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8))

@@ -13,6 +13,7 @@ import com.dvidder.service.ProfileService;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
+import org.json.JSONObject;
 import static org.junit.Assert.assertEquals;
 import org.junit.Before;
 import org.junit.Test;
@@ -86,5 +87,20 @@ public class PostTest {
         mockMvc.perform(get("/posts?username=test_user"))
                 .andExpect(status().isOk())
                 .andExpect(MockMvcResultMatchers.jsonPath("$[1].content").value("Hello"));
+    }
+    
+    @Test
+    @WithUserDetails("test_user")
+    public void deletePost() throws Exception {
+        
+        // Create a new post to be deleted
+        String postResponse = mockMvc.perform(post("/post?content=ads&tags=f"))
+                .andReturn().getResponse().getContentAsString();
+        JSONObject postObject = new JSONObject(postResponse);
+        String postId = Long.toString(postObject.getLong("postId"));
+        
+        // Delete the post
+        mockMvc.perform(delete("/post/" + postId))
+                .andExpect(status().isOk());
     }
 }
