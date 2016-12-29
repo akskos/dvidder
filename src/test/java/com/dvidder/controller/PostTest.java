@@ -13,6 +13,7 @@ import com.dvidder.service.ProfileService;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
+import org.json.JSONArray;
 import org.json.JSONObject;
 import static org.junit.Assert.assertEquals;
 import org.junit.Before;
@@ -94,9 +95,12 @@ public class PostTest {
     public void deletePost() throws Exception {
         
         // Create a new post to be deleted
-        String postResponse = mockMvc.perform(post("/post?content=ads&tags=f"))
+        mockMvc.perform(post("/post?content=ads&tags=qwer"));
+        
+        String postResponse = mockMvc.perform(get("/posts?tag=qwer"))
                 .andReturn().getResponse().getContentAsString();
-        JSONObject postObject = new JSONObject(postResponse);
+        JSONArray postObjectList = new JSONArray(postResponse);
+        JSONObject postObject = (JSONObject) postObjectList.get(0);
         String postId = Long.toString(postObject.getLong("postId"));
         
         // Delete the post
