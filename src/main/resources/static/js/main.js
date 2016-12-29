@@ -28,12 +28,12 @@ function constructPostHTML(post) {
         tags += tag.name + ' ';
     });
 
-    let child = '<li><div class=\'post\'><img src=\'/img/default-profile-pic.png\' class=\'profile-pic\'></img><p id="username">' + post.sender +
+    let child = '<li><div id="post-' + post.postId + '" class=\'post\'><img src=\'/img/default-profile-pic.png\' class=\'profile-pic\'></img><p id="username">' + post.sender +
                 '</p><br /><br /><p>' + post.content + '</p> <br />' +
                 '<small>' + date + ' </small>' +
                 '<small>tags: ' + tags + '</small>';
 
-    child += '<a href="#" onclick="likePost(' + post.postId + ')">Like (' + post.likers.length + ') </a>'
+    child += '<a class="like-link" href="#" onclick="likePost(' + post.postId + ')">Like (' + post.likers.length + ') </a>'
     
     if (account.username === post.sender) {
         child += '<a href="#" onclick="deletePost(' + post.postId + ')">Delete</a>';
@@ -113,7 +113,8 @@ function likePost(id) {
             'X-CSRF-TOKEN': getCSRFToken()
         },
         success: function(result) {
-            
+            let postId = result.postId;
+            $("#post-" + postId).find(".like-link").html("Like (" + result.likers.length + ") ");
         }
     })
 }
