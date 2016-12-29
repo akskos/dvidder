@@ -74,7 +74,7 @@ public class PostController {
 
         postService.createPost(content, tags);
 
-        return "redirect:/";
+        return "redirect:/?sent";
     }
 
     // Delete a post

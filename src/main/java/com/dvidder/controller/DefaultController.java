@@ -41,7 +41,12 @@ public class DefaultController {
     }
 
     @RequestMapping("/")
-    public String index(Model model) {
+    public String index(Model model, @RequestParam(required=false) String sent) {
+        
+        if (sent != null) {
+            model.addAttribute("sentMessage", "Done! If you want to see your dveed, search for dveeds with your username or any tag you used.");
+        }
+        
         model.addAttribute("username", profileService.getCurrentUsername());
         return "index";
     }

@@ -78,3 +78,7 @@ p#username {
 a {
     cursor: pointer;
 }
+
+#sent-message {
+    color: gray;
+}
