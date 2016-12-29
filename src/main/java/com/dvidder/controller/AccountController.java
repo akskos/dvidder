@@ -6,7 +6,9 @@
 package com.dvidder.controller;
 
 import com.dvidder.domain.Account;
+import com.dvidder.domain.Post;
 import com.dvidder.repository.AccountRepository;
+import com.dvidder.repository.PostRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -28,6 +30,9 @@ public class AccountController {
     @Autowired
     AccountRepository accountRepository;
     
+    @Autowired
+    private PostRepository postRepository;
+    
     @RequestMapping(value="/account", method=RequestMethod.GET, produces="application/json")
     @ResponseBody
     public Account account() {
@@ -40,6 +45,12 @@ public class AccountController {
     @ResponseBody
     public ResponseEntity<String> deleteAccount(@PathVariable String username) {
         Account account = accountRepository.findByUsername(username);
+        
+        // Delete all account's posts
+        for (Post p : account.getPosts()) {
+            postRepository.delete(p);
+        }
+        
         accountRepository.delete(account);
         return new ResponseEntity<>(HttpStatus.OK);
     }
