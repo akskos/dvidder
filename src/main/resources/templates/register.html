@@ -9,19 +9,37 @@ and open the template in the editor.
         <title>Dvidder - Register</title>
         <meta charset="UTF-8"></meta>
         <meta name="viewport" content="width=device-width, initial-scale=1.0"></meta>
+        
+         <!-- jQuery -->
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+
+        <!-- Bootstrap -->
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous"></link>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+
+        <link rel="stylesheet" href="css/style.css"></link>
     </head>
     <body>
-        <p>Register</p>
-        <form th:action="@{/register}" method="post">
-            <label for="username">Username</label>
-            <input type="text" name="username" id="username"/>      
-            <br />
-            <label for="password">Password</label>
-            <input type="password" name="password" id="password"/>  
-            <br />
-            <button type="submit">Register</button>
-            <br />
-        </form>
-        <a th:href="@{/login}">Login</a>
+        <div class="container">
+            <div class="user-details-container">
+                <center>
+                    <img src="/img/logo.png" id="logo"></img>
+                </center>
+                <form th:action="@{/register}" method="post">
+                    <div class="form-group">
+                        <label for="username">Username</label>
+                        <input class="form-control" type="text" name="username" id="username"/>
+                    </div>
+                    <div class="form-group">
+                        <label for="password">Password</label>
+                        <input class="form-control" type="password" name="password" id="password"/>  
+                    </div>
+                    <br />
+                    <button type="submit" class="btn btn-primary btn-block">Register</button>
+                    <br />
+                </form>
+                <p>Already have an account? <a th:href="@{/login}">Login</a></p>
+            </div>
+        </div>
     </body>
 </html>
