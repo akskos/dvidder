@@ -66,3 +66,7 @@ p#username {
     padding-left: 10px;
     font-size: 14pt;
 }
+
+.error {
+    color: red;
+}
