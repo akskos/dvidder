@@ -46,6 +46,10 @@ public class AccountController {
     public ResponseEntity<String> deleteAccount(@PathVariable String username) {
         Account account = accountRepository.findByUsername(username);
         
+        if (account == null) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+        
         // Delete all account's posts
         for (Post p : account.getPosts()) {
             postRepository.delete(p);
