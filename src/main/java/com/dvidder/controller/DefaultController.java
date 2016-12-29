@@ -29,9 +29,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 @Controller
 public class DefaultController {
 
-    @Autowired
-    AccountRepository accountRepository;
-    
     @RequestMapping("/")
     public String index(Model model) {
         User currentUser = (User)SecurityContextHolder.getContext().getAuthentication().getPrincipal();

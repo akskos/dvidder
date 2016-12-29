@@ -28,6 +28,14 @@ public class Tag {
     
     private String name;
     
+    public Tag() {
+        
+    }
+    
+    public Tag(String tagname) {
+        name = tagname;
+    }
+    
     public Long getTagId() {
         return tagId;
     }

@@ -74,7 +74,10 @@ public class PostService {
 
     public List<Post> getPostsByUser(String username) {
         Account account = accountRepository.findByUsername(username);
-        return account.getPosts();
+        if (account != null) {
+            return account.getPosts();
+        }
+        return new ArrayList<>();
     }
 
     public List<Post> getPostsByTag(String tagName) {
