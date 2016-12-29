@@ -70,3 +70,7 @@ p#username {
 .error {
     color: red;
 }
+
+#logout-link {
+    color: #8cc4e9;
+}
