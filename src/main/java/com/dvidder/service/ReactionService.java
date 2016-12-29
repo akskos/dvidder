@@ -5,7 +5,9 @@
  */
 package com.dvidder.service;
 
+import com.dvidder.domain.Like;
 import com.dvidder.domain.Post;
+import com.dvidder.domain.Reaction;
 import com.dvidder.repository.PostRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -29,10 +31,15 @@ public class ReactionService {
         Post post = postRepository.findOne(Long.parseLong(id));
         String username = profileService.getCurrentUsername();
         
-        if (!post.getLikers().contains(username)) {
-            post.getLikers().add(username);
-            postRepository.save(post);
+        for (Reaction r : post.getReactions()) {
+            if (r.getReactor().equals(username) && r.getReactionName().equals("like")) {
+                return post;
+            }
         }
+        
+        Like like = new Like();
+        like.setReactor(username);
+        post.getReactions().add(like);
         
         return post;
     }

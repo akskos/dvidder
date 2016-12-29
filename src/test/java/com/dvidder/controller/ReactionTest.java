@@ -49,6 +49,6 @@ public class ReactionTest {
         mockMvc.perform(post("/posts/1/like"))
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8))
-                .andExpect(MockMvcResultMatchers.jsonPath("$.likers[0]").value("test_user"));
+                .andExpect(MockMvcResultMatchers.jsonPath("$.reactions[0].reactor").value("test_user"));
     }
 }

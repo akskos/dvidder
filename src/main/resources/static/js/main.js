@@ -33,7 +33,7 @@ function constructPostHTML(post) {
                 '<small>' + date + ' </small>' +
                 '<small>tags: ' + tags + '</small>';
 
-    child += '<a class="like-link" onclick="likePost(' + post.postId + ')">Like (' + post.likers.length + ') </a>'
+    child += '<a class="like-link" onclick="likePost(' + post.postId + ')">Like (' + numberOfLikes(post) + ') </a>'
     
     if (account.username === post.sender) {
         child += '<a onclick="deletePost(' + post.postId + ')">Delete</a>';
@@ -114,7 +114,7 @@ function likePost(id) {
         },
         success: function(result) {
             let postId = result.postId;
-            $("#post-" + postId).find(".like-link").html("Like (" + result.likers.length + ") ");
+            $("#post-" + postId).find(".like-link").html("Like (" + numberOfLikes(result) + ") ");
         }
     })
 }
@@ -130,6 +130,16 @@ function createPost() {
             console.log('dveed created with an id: ' + result.postId)
         }
     });
+}
+
+function numberOfLikes(post) {
+    let likes = 0;
+    for (i = 0; i < post.reactions.length; i++) {
+        if (post.reactions[i].reactionName === 'like') {
+            likes++;
+        }
+    }
+    return likes;
 }
 
 function getCSRFToken() {

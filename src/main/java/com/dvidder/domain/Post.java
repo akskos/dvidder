@@ -36,22 +36,22 @@ public class Post {
     
     @Column
     @ElementCollection(targetClass=String.class)
-    private List<String> likers;
+    private List<Reaction> reactions;
     
     @ManyToMany
     private List<Tag> tags;
 
-    public List<String> getLikers() {
-        return likers;
+    public List<Reaction> getReactions() {
+        return reactions;
     }
 
-    public void setLikers(List<String> likers) {
-        this.likers = likers;
+    public void setReactions(List<Reaction> reactors) {
+        this.reactions = reactors;
     }
     
     public Post() {
         tags = new ArrayList<>();
-        likers = new ArrayList<>();
+        reactions = new ArrayList<>();
     }
 
     public String getSender() {
