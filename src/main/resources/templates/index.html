@@ -17,14 +17,12 @@ and open the template in the editor.
     <body>
         <p>Share dveeds with your friends :)</p> <br />
         <p>Hi, <p th:text="${username}">username</p> </p>
-        <form th:action="@{/post}" method="post">
-            <textarea name="content"></textarea>
-            <br />
-            <label for="tags">Tags: </label>
-            <input type="text" id="tags" name="tags" placeholder="separated by space" />
-            <br />
-            <button type="submit">Dveed!</button>
-        </form>
+        <textarea id="post-content"></textarea>
+        <br />
+        <label for="tags">Tags: </label>
+        <input type="text" id="post-tags" name="tags" placeholder="separated by space" />
+        <br />
+        <button onclick="createPost()">Dveed!</button>
         <br />
         
         <label for="username-searchkey">Find dveeds by user: </label> <br />

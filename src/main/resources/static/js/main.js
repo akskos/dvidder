@@ -119,6 +119,19 @@ function likePost(id) {
     })
 }
 
+function createPost() {
+    $.ajax({
+        url: '/post?content=' + $("#post-content").val() + '&tags=' + $("#post-tags").val(),
+        type: 'post',
+        headers: {
+            'X-CSRF-TOKEN': getCSRFToken()
+        },
+        success: function(result) {
+            
+        }
+    });
+}
+
 function getCSRFToken() {
     return $('meta[name="_csrf"]').attr('content');
 }

@@ -40,9 +40,9 @@ public class PostController {
     
     // Create a post
     @RequestMapping(value="/post", method=RequestMethod.POST)
-    public String post(@RequestParam String content, @RequestParam String tags) {
-        postService.createPost(content, tags);
-        return "redirect:/";
+    @ResponseBody
+    public Post post(@RequestParam String content, @RequestParam String tags) {
+        return postService.createPost(content, tags);
     }
     
     // Delete a post

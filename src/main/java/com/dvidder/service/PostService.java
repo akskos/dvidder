@@ -40,7 +40,7 @@ public class PostService {
     @Autowired
     ProfileService profileService;
 
-    public void createPost(String content, String tags) {
+    public Post createPost(String content, String tags) {
 
         // Find current account
         Account currentAccount = accountRepository.findByUsername(profileService.getCurrentUsername());
@@ -72,6 +72,8 @@ public class PostService {
 
         postRepository.save(post);
         accountRepository.save(currentAccount);
+        
+        return post;
     }
 
     public List<Post> getPostsByUser(String username) {
