@@ -127,7 +127,7 @@ function createPost() {
             'X-CSRF-TOKEN': getCSRFToken()
         },
         success: function(result) {
-            
+            console.log('dveed created with an id: ' + result.postId)
         }
     });
 }
