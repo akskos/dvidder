@@ -62,7 +62,16 @@ public class PostTest {
         mockMvc.perform(get("/posts?username=test_user"))
                 .andDo(print())
                 .andExpect(status().isOk())
-                //.andExpect(content().contentType(MediaType.APPLICATION_JSON))
+                .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8))
+                .andExpect(MockMvcResultMatchers.jsonPath("$[0].content").value("this is a post"));
+    }
+    
+    @Test
+    public void getPostsForTag() throws Exception {
+        mockMvc.perform(get("/posts?tag=b"))
+                .andDo(print())
+                .andExpect(status().isOk())
+                .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8))
                 .andExpect(MockMvcResultMatchers.jsonPath("$[0].content").value("this is a post"));
     }
 }
