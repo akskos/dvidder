@@ -43,6 +43,13 @@ public class TestProfile {
     @PostConstruct
     public void init() {
         
+        // Create admin account
+        Account admin = new Account();
+        admin.setAdmin(true);
+        admin.setUsername("admin");
+        admin.setPassword(passwordEncoder.encode("supersecret"));
+        accountRepository.save(admin);
+        
         // Create test account
         Account user1 = new Account();
         user1.setUsername("test_user");
@@ -63,5 +70,11 @@ public class TestProfile {
         
         postRepository.save(post);
         accountRepository.save(user1);
+        
+        // Create another test account
+        Account user2 = new Account();
+        user2.setUsername("test_user_2");
+        user2.setPassword(passwordEncoder.encode("password"));
+        accountRepository.save(user2);
     }
 }

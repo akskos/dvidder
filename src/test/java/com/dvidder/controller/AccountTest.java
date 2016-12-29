@@ -44,10 +44,17 @@ public class AccountTest {
     
     @Test
     @WithUserDetails("test_user")
-    public void getMyUsername() throws Exception {
+    public void getMyAccountDetails() throws Exception {
         mockMvc.perform(get("/account"))
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.username").value("test_user"));
+    }
+    
+    @Test
+    @WithUserDetails("admin")
+    public void deleteAccount() throws Exception {
+        mockMvc.perform(delete("/account/test_user_2"))
+                .andExpect(status().isOk());
     }
 }
