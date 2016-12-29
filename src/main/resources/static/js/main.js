@@ -33,14 +33,14 @@ function constructPostHTML(post) {
                 '<small>' + date + ' </small>' +
                 '<small>tags: ' + tags + '</small>';
 
-    child += '<a class="like-link" href="#" onclick="likePost(' + post.postId + ')">Like (' + post.likers.length + ') </a>'
+    child += '<a class="like-link" onclick="likePost(' + post.postId + ')">Like (' + post.likers.length + ') </a>'
     
     if (account.username === post.sender) {
-        child += '<a href="#" onclick="deletePost(' + post.postId + ')">Delete</a>';
+        child += '<a onclick="deletePost(' + post.postId + ')">Delete</a>';
     }
     
     if (account.admin) {
-        child += '<a href="#" onclick="deleteAccount(\'' + post.sender + '\')">Delete account</a>';
+        child += '<a onclick="deleteAccount(\'' + post.sender + '\')">Delete account</a>';
     }
 
     child += '</li></div>';
@@ -85,7 +85,7 @@ function deletePost(id) {
             'X-CSRF-TOKEN': getCSRFToken()
         },
         success: function(result) {
-            
+            $("#post-" + id).remove();
         }
     });
 }
