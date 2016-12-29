@@ -5,6 +5,7 @@
  */
 package com.dvidder.service;
 
+import com.dvidder.domain.Dislike;
 import com.dvidder.domain.Like;
 import com.dvidder.domain.Post;
 import com.dvidder.domain.Reaction;
@@ -40,6 +41,23 @@ public class ReactionService {
         Like like = new Like();
         like.setReactor(username);
         post.getReactions().add(like);
+        
+        return post;
+    }
+
+    public Post dislike(String id) {
+        Post post = postRepository.findOne(Long.parseLong(id));
+        String username = profileService.getCurrentUsername();
+        
+        for (Reaction r : post.getReactions()) {
+            if (r.getReactor().equals(username) && r.getReactionName().equals("dislike")) {
+                return post;
+            }
+        }
+        
+        Dislike dislike = new Dislike();
+        dislike.setReactor(username);
+        post.getReactions().add(dislike);
         
         return post;
     }

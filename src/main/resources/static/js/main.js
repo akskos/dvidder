@@ -34,6 +34,7 @@ function constructPostHTML(post) {
                 '<small>tags: ' + tags + '</small>';
 
     child += '<a class="like-link" onclick="likePost(' + post.postId + ')">Like (' + numberOfLikes(post) + ') </a>'
+    child += '<a class="dislike-link" onclick="dislikePost(' + post.postId + ')">Disike (' + numberOfDislikes(post) + ') </a>'
     
     if (account.username === post.sender) {
         child += '<a onclick="deletePost(' + post.postId + ')">Delete</a>';
@@ -119,6 +120,21 @@ function likePost(id) {
     })
 }
 
+function dislikePost(id) {
+    console.log('disliking post ' + id);
+    $.ajax({
+        url: '/posts/' + id + '/dislike',
+        type: 'post',
+        headers: {
+            'X-CSRF-TOKEN': getCSRFToken()
+        },
+        success: function(result) {
+            let postId = result.postId;
+            $("#post-" + postId).find(".dislike-link").html("Dislike (" + numberOfDislikes(result) + ") ");
+        }
+    })
+}
+
 function createPost() {
     $.ajax({
         url: '/post?content=' + $("#post-content").val() + '&tags=' + $("#post-tags").val(),
@@ -132,14 +148,22 @@ function createPost() {
     });
 }
 
-function numberOfLikes(post) {
+function numberOfReactions(post, reaction) {
     let likes = 0;
     for (i = 0; i < post.reactions.length; i++) {
-        if (post.reactions[i].reactionName === 'like') {
+        if (post.reactions[i].reactionName === reaction) {
             likes++;
         }
     }
     return likes;
+}
+
+function numberOfLikes(post) {
+    return numberOfReactions(post, 'like');
+}
+
+function numberOfDislikes(post) {
+    return numberOfReactions(post, 'dislike');
 }
 
 function getCSRFToken() {

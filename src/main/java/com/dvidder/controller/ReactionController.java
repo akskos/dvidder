@@ -33,4 +33,10 @@ public class ReactionController {
     public Post like(@PathVariable String id) {
         return reactionService.like(id);
     }
+    
+    @RequestMapping(value="/posts/{id}/dislike", method=RequestMethod.POST)
+    @ResponseBody
+    public Post dislike(@PathVariable String id) {
+        return reactionService.dislike(id);
+    }
 }
