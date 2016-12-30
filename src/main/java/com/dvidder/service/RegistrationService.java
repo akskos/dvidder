@@ -31,14 +31,19 @@ public class RegistrationService {
     @Autowired
     private PasswordEncoder passwordEncoder;
     
-    public void registerAccount(String username, String password, MultipartFile profilePicFile) throws IOException {
+    public void registerAccount(String username, String password, MultipartFile profilePicFile, boolean defaultPicture) throws IOException {
         Account account = new Account();
         account.setUsername(username);
         account.setPassword(passwordEncoder.encode(password));
         
+        
         ProfilePicture profilepic = new ProfilePicture();
-        profilepic.setDefaultPic(false);
-        profilepic.setImageData(profilePicFile.getBytes());
+        if (defaultPicture) {
+            profilepic.setDefaultPic(true);
+        } else {
+            profilepic.setDefaultPic(false);
+            profilepic.setImageData(profilePicFile.getBytes());
+        }
         account.setProfilePicture(profilepic);
         
         profilePictureRepository.save(profilepic);

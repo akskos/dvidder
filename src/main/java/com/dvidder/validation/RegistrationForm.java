@@ -24,6 +24,8 @@ public class RegistrationForm {
     private String password;
     
     private MultipartFile profilepic;
+    
+    private boolean defaultPicture;
 
     public String getUsername() {
         return username;
@@ -47,5 +49,13 @@ public class RegistrationForm {
 
     public void setProfilepic(MultipartFile profilepic) {
         this.profilepic = profilepic;
+    }
+
+    public boolean isDefaultPicture() {
+        return defaultPicture;
+    }
+
+    public void setDefaultPicture(boolean defaultPicture) {
+        this.defaultPicture = defaultPicture;
     }
 }

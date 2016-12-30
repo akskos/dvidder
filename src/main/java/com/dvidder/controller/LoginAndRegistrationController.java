@@ -60,6 +60,7 @@ public class LoginAndRegistrationController {
         String username = registrationForm.getUsername();
         String password = registrationForm.getPassword();
         MultipartFile profilePicFile = registrationForm.getProfilepic();
+        boolean defaultPicture = registrationForm.isDefaultPicture();
         
         if (!registrationService.availableUsername(username)) {
             bindingResult.addError(new FieldError("registrationForm", "username", "username not available"));
@@ -69,7 +70,7 @@ public class LoginAndRegistrationController {
             return "register";
         }
         
-        registrationService.registerAccount(username, password, profilePicFile);
+        registrationService.registerAccount(username, password, profilePicFile, defaultPicture);
         
         return "redirect:/login";
     }

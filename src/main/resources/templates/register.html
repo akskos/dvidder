@@ -42,6 +42,11 @@ and open the template in the editor.
                             <input th:field="*{profilepic}" class="form-control" type="file" accept="image/*"/>
                             <small class="error" th:if="${#fields.hasErrors('profilepic')}" th:errors="*{profilepic}">Profilepic error</small>
                         </div>
+                        <div class="checkbox">
+                            <label>
+                                <input th:field="*{defaultPicture}" name="defaultPicture" type="checkbox"></input> Use default picture
+                            </label>
+                        </div>
                         <br />
                         <button type="submit" class="btn btn-primary btn-block">Register</button>
                         <br />
