@@ -7,11 +7,15 @@ package com.dvidder.domain;
 
 import java.util.ArrayList;
 import java.util.List;
+import javax.persistence.Column;
+import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Lob;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import org.hibernate.validator.constraints.Length;
 import org.hibernate.validator.constraints.NotEmpty;
 
@@ -30,7 +34,10 @@ public class Account {
     
     private String password;
     private boolean admin;
-
+    
+    @OneToOne
+    private ProfilePicture profilePicture;
+    
     public boolean isAdmin() {
         return admin;
     }
@@ -76,5 +83,13 @@ public class Account {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public ProfilePicture getProfilePicture() {
+        return profilePicture;
+    }
+
+    public void setProfilePicture(ProfilePicture profilePicture) {
+        this.profilePicture = profilePicture;
     }
 }

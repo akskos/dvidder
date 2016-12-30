@@ -26,7 +26,7 @@ and open the template in the editor.
                     <center>
                         <img src="/img/logo.png" id="logo"></img>
                     </center>
-                    <form th:action="@{/register}" th:object="${registrationForm}" method="post">
+                    <form th:action="@{/register}" th:object="${registrationForm}" method="post" enctype="multipart/form-data">
                         <div class="form-group">
                             <label for="username">Username</label>
                             <input th:field="*{username}" class="form-control" type="text" name="username" id="username"/>
@@ -36,6 +36,11 @@ and open the template in the editor.
                             <label for="password">Password</label>
                             <input th:field="*{password}" class="form-control" type="password" name="password" id="password"/>  
                             <small class="error" th:if="${#fields.hasErrors('password')}" th:errors="*{password}">Password error</small>
+                        </div>
+                        <div class="form-group">
+                            <label for="profilepic">Profile picture</label>
+                            <input th:field="*{profilepic}" class="form-control" type="file" accept="image/*"/>
+                            <small class="error" th:if="${#fields.hasErrors('profilepic')}" th:errors="*{profilepic}">Profilepic error</small>
                         </div>
                         <br />
                         <button type="submit" class="btn btn-primary btn-block">Register</button>

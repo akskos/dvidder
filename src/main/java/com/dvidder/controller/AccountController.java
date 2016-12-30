@@ -9,6 +9,8 @@ import com.dvidder.domain.Account;
 import com.dvidder.domain.Post;
 import com.dvidder.repository.AccountRepository;
 import com.dvidder.repository.PostRepository;
+import com.dvidder.service.AccountService;
+import java.io.IOException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -27,6 +29,9 @@ import org.springframework.web.bind.annotation.ResponseBody;
 @Controller
 public class AccountController { 
    
+    @Autowired
+    private AccountService accountService;
+    
     @Autowired
     AccountRepository accountRepository;
     
@@ -57,5 +62,14 @@ public class AccountController {
         
         accountRepository.delete(account);
         return new ResponseEntity<>(HttpStatus.OK);
+    }
+    
+    @RequestMapping(value="/account/{username}/profilepic", method=RequestMethod.GET, produces="image/png")
+    @ResponseBody
+    public byte[] getProfilePicture(@PathVariable String username) throws IOException {
+        if (!accountService.accountExists(username)) {
+            return new byte[0];
+        }
+        return accountService.getProfilePictureForUsername(username);
     }
 }

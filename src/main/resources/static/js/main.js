@@ -28,7 +28,7 @@ function constructPostHTML(post) {
         tags += tag.name + ' ';
     });
 
-    let child = '<li><div id="post-' + post.postId + '" class=\'post\'><img src=\'/img/default-profile-pic.png\' class=\'profile-pic\'></img><p id="username">' + post.sender +
+    let child = '<li><div id="post-' + post.postId + '" class=\'post\'><img class="profile-pic" src=\'/account/' + post.sender + '/profilepic\'></img><p id="username">' + post.sender +
                 '</p><br /><br /><p>' + post.content + '</p> <br />' +
                 '<small>' + date + ' </small>';
         

@@ -5,6 +5,8 @@
  */
 package com.dvidder.service;
 
+import com.dvidder.repository.AccountRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Service;

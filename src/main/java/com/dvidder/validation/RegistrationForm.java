@@ -7,6 +7,7 @@ package com.dvidder.validation;
 
 import org.hibernate.validator.constraints.Length;
 import org.hibernate.validator.constraints.NotEmpty;
+import org.springframework.web.multipart.MultipartFile;
 
 /**
  *
@@ -21,6 +22,8 @@ public class RegistrationForm {
     @NotEmpty
     @Length(min = 6, max = 100)
     private String password;
+    
+    private MultipartFile profilepic;
 
     public String getUsername() {
         return username;
@@ -36,5 +39,13 @@ public class RegistrationForm {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public MultipartFile getProfilepic() {
+        return profilepic;
+    }
+
+    public void setProfilepic(MultipartFile profilepic) {
+        this.profilepic = profilepic;
     }
 }
