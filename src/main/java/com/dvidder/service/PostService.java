@@ -125,7 +125,7 @@ public class PostService {
         for (int i = 0; i < stringTags.length; i++) {
             String tagName = stringTags[i];
             
-            if (tagName.length() > 10) {
+            if (tagName.length() > 30) {
                 return false;
             }
         }
