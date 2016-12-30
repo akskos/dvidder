@@ -30,9 +30,12 @@ function constructPostHTML(post) {
 
     let child = '<li><div id="post-' + post.postId + '" class=\'post\'><img src=\'/img/default-profile-pic.png\' class=\'profile-pic\'></img><p id="username">' + post.sender +
                 '</p><br /><br /><p>' + post.content + '</p> <br />' +
-                '<small>' + date + ' </small>' +
-                '<small>tags: ' + tags + '</small>';
-
+                '<small>' + date + ' </small>';
+        
+    if (post.tags.length > 0 && post.tags[0].name.length > 0) {
+        child += '<small>tags: ' + tags + '</small>';
+    }
+            
     child += '<a class="like-link" onclick="likePost(' + post.postId + ')">Like (' + numberOfLikes(post) + ') </a>'
     child += '<a class="dislike-link" onclick="dislikePost(' + post.postId + ')">Disike (' + numberOfDislikes(post) + ') </a>'
     
