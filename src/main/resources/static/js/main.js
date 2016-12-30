@@ -4,7 +4,8 @@
  * and open the template in the editor.
  */
 
-var account = "";
+var username = "";
+var admin = false;
 
 $(document).ready(function() {
    
@@ -12,13 +13,22 @@ $(document).ready(function() {
    
     // Find username
     $.ajax({
-        url: '/account',
+        url: '/account?param=username',
         type: 'GET',
         success: function(result) {
-            account = result;
-            console.log('my username is ' + result.username);
+            username = result;
+            console.log('my username is ' + result);
         }
-    })
+    });
+    
+    // Am I admin?
+    $.ajax({
+        url: '/account?param=admin',
+        type: 'GET',
+        success: function(result) {
+            admin = (result === 'true');
+        }
+    });
 });
 
 function constructPostHTML(post) {
@@ -39,11 +49,11 @@ function constructPostHTML(post) {
     child += '<a class="like-link" onclick="likePost(' + post.postId + ')">Like (' + numberOfLikes(post) + ') </a>'
     child += '<a class="dislike-link" onclick="dislikePost(' + post.postId + ')">Disike (' + numberOfDislikes(post) + ') </a>'
     
-    if (account.username === post.sender) {
+    if (username === post.sender) {
         child += '<a onclick="deletePost(' + post.postId + ')">Delete</a>';
     }
     
-    if (account.admin) {
+    if (admin) {
         child += '<a onclick="deleteAccount(\'' + post.sender + '\')">Delete account</a>';
     }
 

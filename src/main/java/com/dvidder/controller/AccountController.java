@@ -20,6 +20,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 /**
@@ -38,12 +39,19 @@ public class AccountController {
     @Autowired
     private PostRepository postRepository;
     
-    @RequestMapping(value="/account", method=RequestMethod.GET, produces="application/json")
+    @RequestMapping(value="/account", method=RequestMethod.GET)
     @ResponseBody
-    public Account account() {
+    public String getAccountInfo(@RequestParam String param) {
         User currentUser = (User)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         Account account = accountRepository.findByUsername(currentUser.getUsername());
-        return account;
+        
+        if (param.equals("username")) {
+            return account.getUsername();
+        } else if (param.equals("admin")) {
+            return Boolean.toString(account.isAdmin());
+        } else {
+            return "error";
+        }
     }
     
     @RequestMapping(value="/account/{username}", method=RequestMethod.DELETE, produces="application/json")
