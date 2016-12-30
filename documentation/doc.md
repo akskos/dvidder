@@ -50,4 +50,4 @@ Users can comment on dveeds with a separate commenting form attached to every dv
 
 ### Follow feed
 
-Users mark any tag or other users as followed and all dveeds by followed users or dveeds that has tags marked as your followed tags will appear in as default below search forms. Feed will be replaced with whatever a user searches. 
+Users mark any tag or other users as followed and all dveeds by followed users or dveeds that has tags marked as your followed tags will appear as default below search forms. Feed will be replaced with whatever a user searches. 
