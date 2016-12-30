@@ -11,6 +11,7 @@ import java.io.DataInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import javax.servlet.ServletContext;
+import javax.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.core.io.Resource;
@@ -27,6 +28,7 @@ public class AccountService {
     @Autowired
     private AccountRepository accountRepository;
     
+    @Transactional
     public byte[] getProfilePictureForUsername(String username) throws IOException {
         Account account = accountRepository.findByUsername(username);
         if (account.getProfilePicture().isDefaultPic()) {
