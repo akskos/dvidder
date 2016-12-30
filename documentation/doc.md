@@ -1,5 +1,7 @@
 # Documentation
 
+Dvidder is a simple social media app that let's you share thoughts with people who you have given your username. (Or people who search for tags you've used)
+
 ## Use cases
 
 ### Login
