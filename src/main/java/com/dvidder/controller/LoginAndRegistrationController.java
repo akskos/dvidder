@@ -17,6 +17,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -42,9 +43,12 @@ public class LoginAndRegistrationController {
     }
 
     @RequestMapping("/login")
-    public String login(@RequestParam(required = false) String logout) {
+    public String login(@RequestParam(required = false) String logout, @RequestParam(required = false) String error, Model model) {
         if (logout != null) {
             SecurityContextHolder.clearContext();
+        }
+        if (error != null) {
+            model.addAttribute("loginError", "incorrect username or password");
         }
         return "login";
     }

@@ -36,6 +36,7 @@ and open the template in the editor.
                             <input class="form-control" type="password" name="password" id="password"/>  
                         </div>
                         <br />
+                        <p class="error" th:text="${loginError}">Login error</p>
                         <button type="submit" class="btn btn-primary btn-block">Log in</button>
                         <br />
                     </form>
