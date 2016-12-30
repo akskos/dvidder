@@ -35,7 +35,7 @@ public class Post {
     private String sender;
     
     @Column
-    @ElementCollection(targetClass=String.class)
+    @ElementCollection(targetClass=Reaction.class)
     private List<Reaction> reactions;
     
     @ManyToMany
