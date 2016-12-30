@@ -44,10 +44,10 @@ Admins also have delete account link in every dveed. Clicking that link will del
 
 ## Uninplemented features
 
-# Commenting
+### Commenting
 
 Users can comment on dveeds with a separate commenting form attached to every dveed.
 
-# Follow feed
+### Follow feed
 
 Users mark any tag or other users as followed and all dveeds by followed users or dveeds that has tags marked as your followed tags will appear in as default below search forms. Feed will be replaced with whatever a user searches. 
