@@ -42,34 +42,17 @@ public class AccountController {
     @RequestMapping(value="/account", method=RequestMethod.GET)
     @ResponseBody
     public String getAccountInfo(@RequestParam String param) {
-        User currentUser = (User)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        Account account = accountRepository.findByUsername(currentUser.getUsername());
-        
-        if (param.equals("username")) {
-            return account.getUsername();
-        } else if (param.equals("admin")) {
-            return Boolean.toString(account.isAdmin());
-        } else {
-            return "error";
-        }
+        return accountService.getAccountInfo(param);
     }
     
     @RequestMapping(value="/account/{username}", method=RequestMethod.DELETE, produces="application/json")
     @ResponseBody
     public ResponseEntity<String> deleteAccount(@PathVariable String username) {
-        Account account = accountRepository.findByUsername(username);
         
-        if (account == null) {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        if (accountService.deleteAccount(username)) {
+            return new ResponseEntity<>(HttpStatus.OK);
         }
-        
-        // Delete all account's posts
-        for (Post p : account.getPosts()) {
-            postRepository.delete(p);
-        }
-        
-        accountRepository.delete(account);
-        return new ResponseEntity<>(HttpStatus.OK);
+        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
     
     @RequestMapping(value="/account/{username}/profilepic", method=RequestMethod.GET, produces="image/png")

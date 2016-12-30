@@ -5,6 +5,7 @@
  */
 package com.dvidder.controller;
 
+import static org.junit.Assert.assertTrue;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -45,10 +46,9 @@ public class AccountTest {
     @Test
     @WithUserDetails("test_user")
     public void getMyAccountDetails() throws Exception {
-        mockMvc.perform(get("/account"))
-                .andExpect(status().isOk())
-                .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8))
-                .andExpect(MockMvcResultMatchers.jsonPath("$.username").value("test_user"));
+        String username = mockMvc.perform(get("/account?param=username"))
+                .andReturn().getResponse().getContentAsString();
+        assertTrue(username.equals("test_user"));
     }
     
     @Test
