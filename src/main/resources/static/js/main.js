@@ -61,7 +61,7 @@ function searchByUser() {
         posts.forEach(function (post) {
             
             var postHTML = constructPostHTML(post);
-            $("#dveedlist").append(postHTML);
+            $("#dveedlist").prepend(postHTML);
         });
     });
 }
@@ -75,7 +75,7 @@ function searchByTag() {
         posts.forEach(function (post) {
             
             var postHTML = constructPostHTML(post);
-            $("#dveedlist").append(postHTML);
+            $("#dveedlist").prepend(postHTML);
         });
     });
 }
